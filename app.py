@@ -4,13 +4,22 @@ import pandas as pd
 import plotly.express as px
 
 # Database connection
+
+import os
+
 def get_db_connection():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="password",
-        database="ecommerce"
-    )
+    try:
+        conn = mysql.connector.connect(
+            host=os.getenv("localhost"),
+            user=os.getenv("root"),
+            password=os.getenv("password"),
+            database=os.getenv("ecommerce")
+        )
+        return conn
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return None
+
 
 # Query execution function
 def execute_query(query):
